@@ -29,4 +29,22 @@ public class ContactHelper extends HelperBase{
     public void updateContact() {
         click(By.xpath("//div[@id='content']/form/input[22]"));
     }
+
+    public void deleteContact() {
+        click(By.xpath("//div[@id='content']/form[2]/input[2]"));
+    }
+
+    public void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    public void deleteSelectedContacts() {
+        click(By.xpath("//input[@value='Delete']"));
+        wd.switchTo().alert().accept();
+        wd.findElement(By.cssSelector("div.msgbox"));
+    }
+
+    public void selectAllContact() {
+        click(By.id("MassCB"));
+    }
 }
