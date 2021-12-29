@@ -21,4 +21,12 @@ public class ContactHelper extends HelperBase{
         type(By.name("mobile"), contactData.getNumber());
         type(By.name("email"),contactData.getEmail());
     }
+
+    public void editContact() {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img"));
+    }
+
+    public void updateContact() {
+        click(By.xpath("//div[@id='content']/form/input[22]"));
+    }
 }
