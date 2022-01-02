@@ -27,8 +27,7 @@ public class ApplicationManager {
         } else if (browser.equals(Browser.FIREFOX)) {
             wd = new FirefoxDriver();
         }
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-        wd = new ChromeDriver();
+
         wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         js = (JavascriptExecutor) wd;
         wd.get("http://localhost/addressbook/index.php");
