@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-
     private int id;
     private final String name;
     private final String lastName;

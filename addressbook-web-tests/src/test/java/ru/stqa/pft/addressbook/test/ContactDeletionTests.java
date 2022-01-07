@@ -9,15 +9,15 @@ import java.util.List;
 public class ContactDeletionTests extends TestBase {
     @Test
     public void testContactDeletion() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
-            app.getNavigationHelper().getAddNew();
+            app.goTo().getAddNew();
             app.getContactHelper().createContact(new ContactData("Testname", "TestLastName", "+79999999999", "test@gmail.com"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().editContact(before.size() - 1);
         app.getContactHelper().deleteContact();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
@@ -27,15 +27,15 @@ public class ContactDeletionTests extends TestBase {
 
     @Test(priority = 1)
     public void testContactDeletion1() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
-            app.getNavigationHelper().getAddNew();
+            app.goTo().getAddNew();
             app.getContactHelper().createContact(new ContactData("Testname", "TestLastName", "+79999999999", "test@gmail.com"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContacts();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
@@ -45,15 +45,15 @@ public class ContactDeletionTests extends TestBase {
 
     @Test(priority = 2)
     public void testContactsDeletion() {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
-            app.getNavigationHelper().getAddNew();
+            app.goTo().getAddNew();
             app.getContactHelper().createContact(new ContactData("Testname", "TestLastName", "+79999999999", "test@gmail.com"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectAllContact();
         app.getContactHelper().deleteSelectedContacts();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 

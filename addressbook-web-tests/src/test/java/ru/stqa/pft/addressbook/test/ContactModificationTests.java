@@ -11,9 +11,9 @@ public class ContactModificationTests extends TestBase{
 
     @Test
     public void testContactModification () {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
-            app.getNavigationHelper().getAddNew();
+            app.goTo().getAddNew();
             app.getContactHelper().createContact(new ContactData("Testname", "TestLastName", "+79999999999", "test@gmail.com"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();
