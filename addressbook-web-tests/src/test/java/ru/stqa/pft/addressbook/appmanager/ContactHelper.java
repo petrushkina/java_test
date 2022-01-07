@@ -23,7 +23,7 @@ public class ContactHelper extends HelperBase{
     }
 
     public void editContact() {
-        click(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img"));
+        click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void updateContact() {
@@ -46,5 +46,20 @@ public class ContactHelper extends HelperBase{
 
     public void selectAllContact() {
         click(By.id("MassCB"));
+    }
+
+
+    public void returnToHomePage() {
+        click(By.linkText("home page"));
+    }
+
+    public void createContact(ContactData contact) {
+        fillNewContactForm(contact);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
