@@ -1,12 +1,15 @@
 package ru.stqa.pft.addressbook.test;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.List;
-import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactDeletionTests extends TestBase {
 
@@ -22,31 +25,27 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion1() {
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
         app.contact().deleteContact(deletedContact);
         app.goTo().homePage();
-        Set<ContactData> after = app.contact().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
-
-        before.remove(deletedContact);
-        Assert.assertEquals(before, after);
+        Contacts after = app.contact().all();
+        assertEquals(after.size(), before.size() - 1);
+        assertThat(after, equalTo(before.without(deletedContact)));
     }
 
 
     @Test(enabled = false)
     public void testContactDeletion() {
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData deletedContact = before.iterator().next();
-        int index = before.size() - 1;
         app.contact().edit();
         app.contact().delete();
         app.goTo().homePage();
-        Set<ContactData> after = app.contact().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        Contacts after = app.contact().all();
+        assertEquals(after.size(), before.size() - 1);
+        assertThat(after, equalTo(before.without(deletedContact)));
 
-        before.remove(deletedContact);
-        Assert.assertEquals(before, after);
    }
 
     @Test(enabled = false)
@@ -56,9 +55,9 @@ public class ContactDeletionTests extends TestBase {
         app.contact().deleteSelected();
         app.goTo().homePage();
         List<ContactData> after = app.contact().list();
-        Assert.assertEquals(after.size(), (before.size() - before.size()));
+        assertEquals(after.size(), (before.size() - before.size()));
 
         before.remove(before.size() - before.size());
-        Assert.assertEquals(before,after);
+        assertEquals(before,after);
     }
 }
