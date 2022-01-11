@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook.test;
+package ru.stqa.pft.addressbook.tests;
 
 import com.google.gson.Gson;
 import org.openqa.selenium.json.TypeToken;
