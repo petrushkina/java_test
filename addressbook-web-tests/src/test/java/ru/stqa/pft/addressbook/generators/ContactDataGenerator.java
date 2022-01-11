@@ -50,21 +50,20 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
-
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
-        Writer writer = new FileWriter(file);
-        for (ContactData contact : contacts) {
-            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
-                    contact.getLastName(), contact.getFirstName(),
-                    contact.getAddress(), contact.getEmail(), contact.getEmail2(), contact.getEmail3(),
-                    contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()));
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact : contacts) {
+                writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
+                        contact.getLastName(), contact.getFirstName(),
+                        contact.getAddress(), contact.getEmail(), contact.getEmail2(), contact.getEmail3(),
+                        contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()));
+            }
         }
-        writer.close();
     }
 
     private List<ContactData> generateContacts(int count) {
