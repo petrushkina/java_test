@@ -38,7 +38,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @DataProvider
-    public Iterator<Object[]> validGroupsFromJson() throws IOException {
+    public Iterator<Object[]> validContactsFromJson() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"))) {
             String json = "";
             String line = reader.readLine();
@@ -53,7 +53,7 @@ public class ContactCreationTests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "validGroupsFromJson")
+    @Test(dataProvider = "validContactsFromJson")
     public void testNewContactCreation(ContactData contact) throws Exception {
         Contacts before = app.db().contacts();
         app.goTo().homePage();
@@ -63,5 +63,6 @@ public class ContactCreationTests extends TestBase {
         assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+        verifyContactListInUi();
     }
 }
