@@ -20,7 +20,6 @@ public class ContactData {
     @Column(name = "firstName")
     private String firstName;
 
-
     @Expose
     @Column(name = "lastName")
     private String lastName;
@@ -44,6 +43,11 @@ public class ContactData {
     @Column(name = "work")
     @Type(type = "text")
     private String workPhone;
+
+    @Expose
+    @Column(name = "phone2")
+    @Type(type = "text")
+    private String phone2;
 
     @Expose
     @Transient
@@ -116,6 +120,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withPhone2(String phone2) {
+        this.phone2 = phone2;
+        return this;
+    }
+
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
         return this;
@@ -174,6 +183,10 @@ public class ContactData {
         return workPhone;
     }
 
+    public String getPhone2() {
+        return phone2;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -221,6 +234,7 @@ public class ContactData {
         if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
         if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
         if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+        if (phone2 != null ? !phone2.equals(that.phone2) : that.phone2 != null) return false;
         if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
@@ -237,6 +251,7 @@ public class ContactData {
         result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
         result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
         result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (phone2 != null ? phone2.hashCode() : 0);
         result = 31 * result + (allPhones != null ? allPhones.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (email2 != null ? email2.hashCode() : 0);
