@@ -43,6 +43,10 @@ public class GroupData {
         return this;
     }
 
+    public Set<ContactData> getContacts() {
+        return new Contacts(contacts);
+    }
+
     public GroupData withName(String name) {
         this.name = name;
         return this;

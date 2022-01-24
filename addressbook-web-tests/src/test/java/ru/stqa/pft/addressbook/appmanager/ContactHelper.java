@@ -5,9 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -54,8 +56,35 @@ public class ContactHelper extends HelperBase {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
-    public void selectById(int id) {
+    public void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    }
+
+    public void selectGroupById(int groupId) {
+        click(By.xpath("(//select[@name='to_group']/option[@value='" + groupId + "'])"));
+    }
+
+    public void clickByAddTo() {
+        click(By.xpath("(//input[@name='add'])"));
+    }
+
+    public void addContactToGroup(int contactId, int groupId) {
+        selectContactById(contactId);
+        selectGroupById(groupId);
+        clickByAddTo();
+    }
+
+    public void removeContactFromGroup(int contactId, int groupId) {
+        filterByGroup(groupId);
+        selectContactById(contactId);
+        removeFromGroup();
+    }
+    public void removeFromGroup() {
+        click(By.xpath("(//input[@name='remove'])"));
+    }
+
+    public void filterByGroup(int groupId) {
+        click(By.xpath("(//select[@name='group']/option[@value='" + groupId + "'])"));
     }
 
     public void deleteSelected() {
@@ -92,7 +121,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteContact(ContactData deletedContact) {
-        selectById(deletedContact.getId());
+        selectContactById(deletedContact.getId());
         deleteSelected();
         contactCache = null;
     }
@@ -157,5 +186,24 @@ public class ContactHelper extends HelperBase {
                 .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withPhone2(phone2)
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
     }
-}
 
+    public ContactData findContactWithGroup(Contacts contacts) {
+        for (ContactData contact : contacts) {
+            Set<GroupData> contInGroup = contact.getGroups();
+            if (contInGroup.size() > 0) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+    public ContactData findContactWithoutGroup(Contacts contacts) {
+        for (ContactData contact : contacts) {
+            Set<GroupData> contInGroup = contact.getGroups();
+            if (contInGroup.size() == 0) {
+                return contact;
+            }
+        }
+        return null;
+    }
+}
