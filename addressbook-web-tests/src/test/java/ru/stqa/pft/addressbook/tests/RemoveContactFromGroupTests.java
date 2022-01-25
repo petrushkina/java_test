@@ -14,30 +14,25 @@ public class RemoveContactFromGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-
         Contacts contacts = app.db().contacts();
 
         if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
         }
-
         if (app.db().contacts().size() == 0) {
             app.goTo().addNew();
             app.contact().create(new ContactData().withLastName("Contact").withFirstName("RemovedFromGroup"));
         }
-
         if (app.contact().findContactWithGroup(contacts) == null) {
             app.goTo().homePage();
-            app.contact().selectAll();
+            app.contact().select(0);
             app.contact().clickByAddTo();
-            ;
         }
     }
 
     @Test
     public void testRemoveContactFromGroup() {
-        app.goTo().homePage();
         Contacts contacts = app.db().contacts();
         ContactData contactWithGroup = app.contact().findContactWithGroup(contacts);
         int contactId = contactWithGroup.getId();
@@ -45,6 +40,7 @@ public class RemoveContactFromGroupTests extends TestBase {
         int groupId = group.getId();
         Groups deletedGroup = app.db().getGroupById(groupId);
         GroupData deletedGroupData = deletedGroup.iterator().next();
+        app.goTo().homePage();
         app.contact().filterByGroup(groupId);
         app.contact().removeContactFromGroup(contactWithGroup.getId(), group.getId());
 
